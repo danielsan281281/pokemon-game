@@ -1,0 +1,60 @@
+<template>
+    <div class="options-container">
+        <ul>
+            <li
+              v-for="pokemon in pokemons"
+              :key="pokemon.id"
+              @click="select(pokemon.id)" :class="{ disabled: optionSelected }">
+                {{ pokemon.name }}
+            </li>
+        </ul>
+    </div>
+</template>
+<script>
+export default {
+    props: {
+        pokemons: {
+            type: Array,
+            required: true
+        }
+    },
+    data: function(){
+        return {
+            optionSelected: false
+        }
+    },
+    methods: {
+        select(pokemonId){
+            this.optionSelected = true
+            this.$emit('selection', pokemonId)
+        }
+    }
+}
+</script>
+<style scoped>
+    ul {
+    list-style-type: none;
+}
+li {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 250px;
+}
+
+li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.options-container {
+    display: flex;
+    justify-content: center;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+</style>
