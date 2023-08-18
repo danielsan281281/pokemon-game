@@ -11,7 +11,9 @@
           @selection="checkAnswer($event)" />
 
         <template v-if="showAnswer">
-            <h2 class="fade-in">{{ message }}</h2>
+            <h2 class="fade-in" :style="{ color: color() }">
+                {{ message() }}
+            </h2>
             <button @click="newGame">
                 Nuevo juego
             </button>
@@ -37,7 +39,7 @@ export default {
             pokemon: null,
             showPokemon: false,
             showAnswer: false,
-            message: ''
+            correctAnswer: false
         }
     },
     methods: {
@@ -51,9 +53,7 @@ export default {
             this.showPokemon = true
             this.showAnswer = true
             if (selectedId === this.pokemon.id) {
-                this.message = `Correcto, ${this.pokemon.name}`
-            } else {
-                this.message = `Oops, era ${this.pokemon.name}`
+                this.correctAnswer = true
             }
         },
         newGame(){
@@ -61,9 +61,15 @@ export default {
             this.pokemon = null
             this.showPokemon = false
             this.showAnswer = false
-            this.message = ''
-            
+            this.correctAnswer = false 
+
             this.mixPokemonArray()
+        },
+        message(){
+            return this.correctAnswer? `Correcto, ${this.pokemon.name}` : `Oops, era ${this.pokemon.name}`
+        },
+        color(){
+            return this.correctAnswer? 'green' : 'red'
         }
     },
     mounted() {
