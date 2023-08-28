@@ -3,17 +3,24 @@
     <div v-else>
         <h1>¿Quién es este pokémon?</h1>
 
+        <h4>
+            <span class="aciertos">Aciertos: {{ aciertos }}</span>
+             | 
+            <span class="fallos">Fallos: {{ fallos }}</span>
+        </h4>
+
         <PokemonPicture
           :pokemonId="pokemon.id"
           :showPokemon="showPokemon" />
-       <PokemonOptions
+        <PokemonOptions
           :pokemons="pokemonArr"
-          @selection="checkAnswer($event)" />
+          @selection="checkAnswer($event)"
+          :disabled="optionsDisabled" />
 
-        <template v-if="showAnswer">
-            <h2 class="fade-in" :style="{ color: color() }">
+        <template v-if="confirmed">
+            <!-- <h2 class="fade-in" :style="{ color: color() }">
                 {{ message() }}
-            </h2>
+            </h2> -->
             <button @click="newGame">
                 Nuevo juego
             </button>
@@ -26,6 +33,8 @@ import PokemonOptions from '@/components/PokemonOptions'
 import PokemonPicture from '@/components/PokemonPicture'
 
 import getPokemonOptions from '@/helpers/getPokemonOptions'
+import store from '@/store'
+import Swal from 'sweetalert2';
 
 export default {
     name: 'PokemonPage',
@@ -38,8 +47,9 @@ export default {
             pokemonArr: [],
             pokemon: null,
             showPokemon: false,
-            showAnswer: false,
-            correctAnswer: false
+            confirmed: false,
+            correctAnswer: false,
+            optionsDisabled: false
         }
     },
     methods: {
@@ -50,18 +60,46 @@ export default {
             this.pokemon = this.pokemonArr[rndInt]
         },
         checkAnswer(selectedId) {
-            this.showPokemon = true
-            this.showAnswer = true
-            if (selectedId === this.pokemon.id) {
-                this.correctAnswer = true
-            }
+            Swal.fire({
+                titleText: '¿Estás seguro?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'No...',
+                confirmButtonText: 'Sí!'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    this.showPokemon = true
+                    this.confirmed = true
+                    this.optionsDisabled = true
+                    if (selectedId === this.pokemon.id) {
+                        this.correctAnswer = true
+                        store.commit('contarAcierto')
+                        Swal.fire({
+                            titleText: this.message(),
+                            icon: 'success'
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            titleText: this.message(),
+                            icon: 'error'
+                        })
+                        store.commit('contarFallo')
+                    }
+                }
+                else
+                    this.optionsDisabled = false
+            })
         },
         newGame(){
             this.pokemonArr = []
             this.pokemon = null
             this.showPokemon = false
-            this.showAnswer = false
-            this.correctAnswer = false 
+            this.confirmed = false
+            this.correctAnswer = false
+            this.optionsDisabled = false
 
             this.mixPokemonArray()
         },
@@ -74,6 +112,24 @@ export default {
     },
     mounted() {
         this.mixPokemonArray()
+    },
+    computed: {
+        aciertos() {
+            return store.getters['getAciertos']
+        },
+        fallos() {
+            return store.getters['getFallos']
+        }
     }
 }
 </script>
+
+<style scoped>
+.aciertos {
+    color: green
+}
+
+.fallos {
+    color: red
+}
+</style>

@@ -4,7 +4,7 @@
             <li
               v-for="pokemon in pokemons"
               :key="pokemon.id"
-              @click="select(pokemon.id)" :class="{ disabled: optionSelected }">
+              @click="select(pokemon.id)" :class="{ disabled }">
                 {{ pokemon.name }}
             </li>
         </ul>
@@ -16,16 +16,13 @@ export default {
         pokemons: {
             type: Array,
             required: true
-        }
-    },
-    data: function(){
-        return {
-            optionSelected: false
+        },
+        disabled: {
+            type: Boolean
         }
     },
     methods: {
         select(pokemonId){
-            this.optionSelected = true
             this.$emit('selection', pokemonId)
         }
     }
@@ -36,7 +33,7 @@ export default {
     list-style-type: none;
 }
 li {
-    background-color: lightgrey;
+    background-color: white;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     cursor: pointer;
