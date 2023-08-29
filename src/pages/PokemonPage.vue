@@ -3,13 +3,13 @@
     <div v-else>
         <h1>¿Quién es este pokémon?</h1>
 
-        <h4>
-            <span class="aciertos">Aciertos: {{ aciertos }}</span>
-             | 
-            <span class="fallos">Fallos: {{ fallos }}</span>
-        </h4>
+        <h3>
+            <span class="aciertos"><i class="fa fa-2x fa-solid fa-thumbs-up"></i>&nbsp;Aciertos: {{ aciertos }}</span>
+            <span class="fallos"><i class="fa fa-2x fa-solid fa-thumbs-down"></i>&nbsp;Fallos: {{ fallos }}</span>
+        </h3>
 
         <PokemonPicture
+
           :pokemonId="pokemon.id"
           :showPokemon="showPokemon" />
         <PokemonOptions
@@ -126,10 +126,19 @@ export default {
 
 <style scoped>
 .aciertos {
-    color: green
+    color: green;
+}
+
+.aciertos > i {
+    margin-right: 2px; 
 }
 
 .fallos {
-    color: red
+    color: red;
+    margin-left: 20px;
+}
+
+.fallos > i {
+    margin-right: 2px; 
 }
 </style>

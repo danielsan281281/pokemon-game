@@ -38,7 +38,10 @@ li {
     border: 1px solid rgba(0, 0, 0, 0.2);
     cursor: pointer;
     margin-bottom: 10px;
-    width: 250px;
+    height: 50px;
+    width: 300px;
+    line-height: 50px;
+    font-size: large
 }
 
 li:hover {
