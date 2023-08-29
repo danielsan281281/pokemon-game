@@ -1,12 +1,12 @@
 <template>
     <h1 v-if="!pokemon">Espere por favor...</h1>
     <div v-else>
-        <h1>¿Quién es este pokémon?</h1>
-
-        <h3>
+        <div>
             <span class="aciertos"><i class="fa fa-2x fa-solid fa-thumbs-up"></i>&nbsp;Aciertos: {{ aciertos }}</span>
             <span class="fallos"><i class="fa fa-2x fa-solid fa-thumbs-down"></i>&nbsp;Fallos: {{ fallos }}</span>
-        </h3>
+        </div>
+
+        <h1>¿Quién es este pokémon?</h1>
 
         <PokemonPicture
 

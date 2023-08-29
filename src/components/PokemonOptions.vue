@@ -51,6 +51,7 @@ li:hover {
 .options-container {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .disabled {

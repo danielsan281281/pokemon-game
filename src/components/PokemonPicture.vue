@@ -40,6 +40,7 @@ export default {
 
 .pokemon-container {
     height: 200px;
+    margin-top: 30px;
 }
 
 img {
