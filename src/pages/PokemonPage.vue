@@ -9,7 +9,6 @@
         <h1>¿Quién es este pokémon?</h1>
 
         <PokemonPicture
-
           :pokemonId="pokemon.id"
           :showPokemon="showPokemon" />
         <PokemonOptions
@@ -17,14 +16,6 @@
           @selection="checkAnswer($event)"
           :disabled="optionsDisabled" />
 
-        <template v-if="confirmed">
-            <!-- <h2 class="fade-in" :style="{ color: color() }">
-                {{ message() }}
-            </h2> -->
-            <button @click="newGame">
-                Nuevo juego
-            </button>
-        </template>
     </div>
 </template>
 
@@ -47,7 +38,6 @@ export default {
             pokemonArr: [],
             pokemon: null,
             showPokemon: false,
-            confirmed: false,
             correctAnswer: false,
             optionsDisabled: false
         }
@@ -59,8 +49,8 @@ export default {
             const rndInt = Math.floor(Math.random() * 4)
             this.pokemon = this.pokemonArr[rndInt]
         },
-        checkAnswer(selectedId) {
-            Swal.fire({
+        async checkAnswer(selectedId) {
+            const {isConfirmed} = await Swal.fire({
                 titleText: '¿Estás seguro?',
                 icon: 'info',
                 showCancelButton: true,
@@ -68,30 +58,32 @@ export default {
                 cancelButtonColor: '#d33',
                 cancelButtonText: 'No...',
                 confirmButtonText: 'Sí!'
-            }).then((result) => {
-                if(result.isConfirmed) {
-                    this.showPokemon = true
-                    this.confirmed = true
-                    this.optionsDisabled = true
-                    if (selectedId === this.pokemon.id) {
-                        this.correctAnswer = true
-                        store.commit('contarAcierto')
-                        Swal.fire({
-                            titleText: this.message(),
-                            icon: 'success'
-                        })
-                    }
-                    else {
-                        Swal.fire({
-                            titleText: this.message(),
-                            icon: 'error'
-                        })
-                        store.commit('contarFallo')
-                    }
-                }
-                else
-                    this.optionsDisabled = false
             })
+
+            if(isConfirmed) {
+                this.showPokemon = true
+                this.optionsDisabled = true
+                if (selectedId === this.pokemon.id) {
+                    this.correctAnswer = true
+                    store.commit('contarAcierto')
+                    await Swal.fire({
+                        titleText: this.message(),
+                        icon: 'success'
+                    })
+                }
+                else {
+                    await Swal.fire({
+                        titleText: this.message(),
+                        icon: 'error'
+                    })
+                    store.commit('contarFallo')
+                }
+
+                this.newGame()
+            }
+            else {
+                this.optionsDisabled = false
+            }
         },
         newGame(){
             this.pokemonArr = []
