@@ -29,7 +29,7 @@ export default {
 }
 </script>
 <style scoped>
-    ul {
+ul {
     list-style-type: none;
 }
 li {
@@ -41,7 +41,8 @@ li {
     height: 50px;
     width: 300px;
     line-height: 50px;
-    font-size: large
+    font-size: large;
+    text-align: center;
 }
 
 li:hover {

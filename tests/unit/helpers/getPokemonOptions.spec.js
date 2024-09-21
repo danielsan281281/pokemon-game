@@ -1,4 +1,4 @@
-import getPokemonOptions, { getPokemons, getPokemonNames } from "@/helpers/getPokemonOptions";
+import getPokemonOptions, { getPokemons, getPokemonNames } from "@/modules/pokemon/helpers/getPokemonOptions";
 import { pokemons } from "../mocks/pokemons.mock";
 
 describe('getPokemonOptions helpers ', () => {

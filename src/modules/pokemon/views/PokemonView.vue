@@ -2,8 +2,8 @@
     <h1 v-if="!pokemon">Espere por favor...</h1>
     <div v-else>
         <div>
-            <span class="aciertos"><i class="fa fa-2x fa-solid fa-thumbs-up"></i>&nbsp;Aciertos: {{ aciertos }}</span>
-            <span class="fallos"><i class="fa fa-2x fa-solid fa-thumbs-down"></i>&nbsp;Fallos: {{ fallos }}</span>
+            <span class="hits"><i class="fa fa-2x fa-solid fa-thumbs-up"></i>&nbsp;Aciertos: {{ hits }}</span>
+            <span class="errors"><i class="fa fa-2x fa-solid fa-thumbs-down"></i>&nbsp;Fallos: {{ errors }}</span>
         </div>
 
         <h1>¿Quién es este pokémon?</h1>
@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import PokemonOptions from '@/components/PokemonOptions'
-import PokemonPicture from '@/components/PokemonPicture'
+import PokemonOptions from '@/modules/pokemon/components/PokemonOptions'
+import PokemonPicture from '@/modules/pokemon/components/PokemonPicture'
 
-import getPokemonOptions from '@/helpers/getPokemonOptions'
+import getPokemonOptions from '@/modules/pokemon/helpers/getPokemonOptions'
 import store from '@/store'
 import Swal from 'sweetalert2';
 
@@ -50,7 +50,7 @@ export default {
             this.pokemon = this.pokemonArr[rndInt]
         },
         async checkAnswer(selectedId) {
-            const {isConfirmed} = await Swal.fire({
+            const { isConfirmed } = await Swal.fire({
                 titleText: '¿Estás seguro?',
                 icon: 'info',
                 showCancelButton: true,
@@ -60,12 +60,12 @@ export default {
                 confirmButtonText: 'Sí!'
             })
 
-            if(isConfirmed) {
+            if( isConfirmed ) {
                 this.showPokemon = true
                 this.optionsDisabled = true
                 if (selectedId === this.pokemon.id) {
                     this.correctAnswer = true
-                    store.commit('contarAcierto')
+                    store.commit('pokemon/increaseHits')
                     await Swal.fire({
                         titleText: this.message(),
                         icon: 'success'
@@ -76,7 +76,7 @@ export default {
                         titleText: this.message(),
                         icon: 'error'
                     })
-                    store.commit('contarFallo')
+                    store.commit('pokemon/increaseErrors')
                 }
 
                 this.newGame()
@@ -106,31 +106,28 @@ export default {
         this.mixPokemonArray()
     },
     computed: {
-        aciertos() {
-            return store.getters['getAciertos']
-        },
-        fallos() {
-            return store.getters['getFallos']
-        }
+        hits: () => store.getters['pokemon/hits'],
+        errors: () => store.getters['pokemon/errors']
     }
 }
 </script>
 
 <style scoped>
-.aciertos {
+.hits {
     color: green;
 }
 
-.aciertos > i {
+.hits > i {
     margin-right: 2px; 
 }
 
-.fallos {
+.errors {
     color: red;
     margin-left: 20px;
 }
 
-.fallos > i {
+.errors > i {
     margin-right: 2px; 
 }
 </style>
+@/modules/pokemon/helpers/getPokemonOptions
