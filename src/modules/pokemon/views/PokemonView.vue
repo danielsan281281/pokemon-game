@@ -1,21 +1,23 @@
 <template>
-    <h1 v-if="!pokemon">Espere por favor...</h1>
-    <div v-else>
-        <div>
-            <span class="hits"><i class="fa fa-2x fa-solid fa-thumbs-up"></i>&nbsp;Aciertos: {{ hits }}</span>
-            <span class="errors"><i class="fa fa-2x fa-solid fa-thumbs-down"></i>&nbsp;Fallos: {{ errors }}</span>
+    <div class="container">
+        <h1 v-if="!pokemon">Espere por favor...</h1>
+        <div class="content" v-else>
+            <div>
+                <span class="hits"><i class="fa fa-2x fa-solid fa-thumbs-up"></i>&nbsp;Aciertos: {{ hits }}</span>
+                <span class="errors"><i class="fa fa-2x fa-solid fa-thumbs-down"></i>&nbsp;Fallos: {{ errors }}</span>
+            </div>
+
+            <h1>¿Quién es este pokémon?</h1>
+
+            <PokemonPicture
+            :pokemonId="pokemon.id"
+            :showPokemon="showPokemon" />
+            <PokemonOptions
+            :pokemons="pokemonArr"
+            @selection="checkAnswer($event)"
+            :disabled="optionsDisabled" />
+
         </div>
-
-        <h1>¿Quién es este pokémon?</h1>
-
-        <PokemonPicture
-          :pokemonId="pokemon.id"
-          :showPokemon="showPokemon" />
-        <PokemonOptions
-          :pokemons="pokemonArr"
-          @selection="checkAnswer($event)"
-          :disabled="optionsDisabled" />
-
     </div>
 </template>
 
@@ -129,5 +131,20 @@ export default {
 .errors > i {
     margin-right: 2px; 
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 </style>
-@/modules/pokemon/helpers/getPokemonOptions
