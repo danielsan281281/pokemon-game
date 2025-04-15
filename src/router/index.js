@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => import(/* webpackChunkName: "pokemon" */ '@/modules/pokemon/views/PokemonView.vue'),
-    beforeEnter: [ isAuthenticatedGuard ]
+    // beforeEnter: [ isAuthenticatedGuard ]
   },
   {
     path: '/auth',

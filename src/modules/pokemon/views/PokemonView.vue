@@ -59,7 +59,9 @@ export default {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 cancelButtonText: 'No...',
-                confirmButtonText: 'Sí!'
+                confirmButtonText: 'Sí!',
+                background: 'rgba(255, 255, 255, 0.8)',
+                backdrop: false
             })
 
             if( isConfirmed ) {
@@ -70,13 +72,17 @@ export default {
                     store.commit('pokemon/increaseHits')
                     await Swal.fire({
                         titleText: this.message(),
-                        icon: 'success'
+                        icon: 'success',
+                        background: 'rgba(255, 255, 255, 0.8)',
+                        backdrop: false,
                     })
                 }
                 else {
                     await Swal.fire({
                         titleText: this.message(),
-                        icon: 'error'
+                        icon: 'error',
+                        background: 'rgba(255, 255, 255, 0.8)',
+                        backdrop: false,
                     })
                     store.commit('pokemon/increaseErrors')
                 }
@@ -147,4 +153,5 @@ export default {
   align-items: center;
   text-align: center;
 }
+
 </style>
