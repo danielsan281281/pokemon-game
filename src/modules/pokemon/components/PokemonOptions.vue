@@ -31,6 +31,7 @@ export default {
 <style scoped>
 ul {
     list-style-type: none;
+    padding-left: 0;
 }
 li {
     background-color: white;
@@ -43,6 +44,7 @@ li {
     line-height: 50px;
     font-size: large;
     text-align: center;
+
 }
 
 li:hover {
