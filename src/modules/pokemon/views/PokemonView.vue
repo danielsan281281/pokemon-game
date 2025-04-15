@@ -2,11 +2,18 @@
     <div class="container">
         <h1 v-if="!pokemon">Espere por favor...</h1>
         <div class="content" v-else>
-            <div>
-                <span class="hits"><i class="fa fa-2x fa-solid fa-thumbs-up"></i>&nbsp;Aciertos: {{ hits }}</span>
-                <span class="errors"><i class="fa fa-2x fa-solid fa-thumbs-down"></i>&nbsp;Fallos: {{ errors }}</span>
+            <div class="score-card">
+                <div class="score-box success">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                    <span>Aciertos</span>
+                    <strong>{{ hits }}</strong>
+                </div>
+                <div class="score-box error">
+                    <i class="fa-solid fa-thumbs-down"></i>
+                    <span>Fallos</span>
+                    <strong>{{ errors }}</strong>
+                </div>
             </div>
-
             <h1>¿Quién es este pokémon?</h1>
 
             <PokemonPicture
@@ -121,21 +128,50 @@ export default {
 </script>
 
 <style scoped>
-.hits {
-    color: green;
+.score-card {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.hits > i {
-    margin-right: 2px; 
+.score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 120px;
+  transition: transform 0.3s;
 }
 
-.errors {
-    color: red;
-    margin-left: 20px;
+.score-box:hover {
+  transform: scale(1.05);
 }
 
-.errors > i {
-    margin-right: 2px; 
+.score-box i {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.success {
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+}
+
+.error {
+  background: linear-gradient(135deg, #F44336, #E57373);
+}
+
+.score-box span {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.score-box strong {
+  font-size: 1.6rem;
 }
 
 .container {
