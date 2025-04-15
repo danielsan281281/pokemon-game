@@ -4,12 +4,10 @@
         <div class="content" v-else>
             <div class="score-card">
                 <div class="score-box success">
-                    <i class="fa-solid fa-thumbs-up"></i>
                     <span>Aciertos</span>
                     <strong>{{ hits }}</strong>
                 </div>
                 <div class="score-box error">
-                    <i class="fa-solid fa-thumbs-down"></i>
                     <span>Fallos</span>
                     <strong>{{ errors }}</strong>
                 </div>
