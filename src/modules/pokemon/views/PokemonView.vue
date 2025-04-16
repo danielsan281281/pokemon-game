@@ -83,13 +83,13 @@ export default {
                     })
                 }
                 else {
+                    store.commit('pokemon/increaseErrors')
                     await Swal.fire({
                         titleText: this.message(),
                         icon: 'error',
                         background: 'rgba(255, 255, 255, 0.8)',
                         backdrop: false,
                     })
-                    store.commit('pokemon/increaseErrors')
                 }
 
                 this.newGame()
